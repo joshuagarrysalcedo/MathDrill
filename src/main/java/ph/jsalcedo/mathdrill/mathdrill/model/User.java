@@ -5,35 +5,37 @@ import lombok.Getter;
 import ph.jsalcedo.mathdrill.mathdrill.Util.Encryption;
 import ph.jsalcedo.mathdrill.mathdrill.Util.ProgramUtility;
 import ph.jsalcedo.mathdrill.mathdrill.annotation.CreatedFrom;
+import ph.jsalcedo.mathdrill.mathdrill.enums.Arithmetic;
+import ph.jsalcedo.mathdrill.mathdrill.enums.Difficulty;
 
 
 import java.util.ArrayList;
+import java.util.Hashtable;
 
 public class User {
 
     private final String userID;
     private final String userName;
     private final String hashPassWord;
-    private final ArrayList<Rating> ratings;
+    private final Hashtable<Arithmetic, Hashtable<Difficulty, Rating>> ratings;
 
 
 
 
-
-    /**
-     * @param userID userID retrieved from the DB
-     * @param userName userName retrieved from the DB
-     * @param hashPassWord hashPassWord retrieved from the DB
-     * @param ratings List of ratings retrieved from the DB
-     * @purpose This constructor will be whenever we access the user from the DB
-     */
-    @CreatedFrom(source = "DATABASE")
-    public User(String userID, String userName, String hashPassWord, ArrayList<Rating> ratings) {
-        this.userID = userID;
-        this.userName = userName;
-        this.hashPassWord = hashPassWord;
-        this.ratings = ratings;
-    }
+//    /**
+//     * @param userID userID retrieved from the DB
+//     * @param userName userName retrieved from the DB
+//     * @param hashPassWord hashPassWord retrieved from the DB
+//     * @param ratings List of ratings retrieved from the DB
+//     * @purpose This constructor will be whenever we access the user from the DB
+//     */
+//    @CreatedFrom(source = "DATABASE")
+//    public User(String userID, String userName, String hashPassWord, Hashtable<Arithmetic, Hashtable<Difficulty, Rating>> ratings) {
+//        this.userID = userID;
+//        this.userName = userName;
+//        this.hashPassWord = hashPassWord;
+//        this.ratings = ratings;
+//    }
 
     /**
      * @param userName username of the USER
@@ -73,7 +75,7 @@ public class User {
      * @Getter
      * @return ratings;
      */
-    public ArrayList<Rating> getRatings() {
+    public Hashtable<Arithmetic, Hashtable<Difficulty, Rating>> getRatings() {
         return ratings;
     }
 

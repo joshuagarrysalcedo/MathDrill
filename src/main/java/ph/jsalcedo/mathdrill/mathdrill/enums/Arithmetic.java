@@ -4,5 +4,6 @@ public enum Arithmetic {
     ADDITION,
     SUBTRACTION,
     MULTIPLICATION,
-    DIVISION
+    DIVISION,
+    MIX
 }

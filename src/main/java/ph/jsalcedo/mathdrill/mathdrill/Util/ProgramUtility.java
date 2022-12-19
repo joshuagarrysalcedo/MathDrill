@@ -1,35 +1,56 @@
 package ph.jsalcedo.mathdrill.mathdrill.Util;
 
 import javafx.scene.control.Alert;
+import ph.jsalcedo.mathdrill.mathdrill.db.DataBase;
+import ph.jsalcedo.mathdrill.mathdrill.enums.Arithmetic;
 import ph.jsalcedo.mathdrill.mathdrill.enums.Difficulty;
+import ph.jsalcedo.mathdrill.mathdrill.model.DrillRecord;
 import ph.jsalcedo.mathdrill.mathdrill.model.Rating;
+import ph.jsalcedo.mathdrill.mathdrill.model.RatingRecord;
+import ph.jsalcedo.mathdrill.mathdrill.model.User;
 
 import java.util.ArrayList;
+import java.util.Hashtable;
 
 public class ProgramUtility {
     private ProgramUtility(){}
 
 
     /**
-    * @// TODO: 20/12/2022
+    *
+     * @Test
     * */
-    public static void login(String username, String pass) {
+    public static boolean  login(String username, String pass) {
+            String tableName = "users";
+            String criteria = "username";
+            String field = "hash";
+            String condition = username;
+            String hashPassword = DataBase.retrieveStringData(tableName, criteria, field, condition);
+
+            return Encryption.checkPass(pass, hashPassword);
 
     }
 
 
     /**
-    * @// TODO: 20/12/2022
+    * @Test
     * */
     public static void register(String userName, String pass) {
-
+            User user = new User(userName,pass);
+            DataBase.addUser(user.getUserID(), user.getUserName(), user.getHashPassWord());
     }
 
     /**
-     * @// TODO: 20/12/2022
+     * Finished Testing!
+     * @// TODO: 20/12/2022  need to convert the result to two decimal places only! 
      * */
-    public static double calculateRating(double oldRating, double attemptRating) {
-        return 0.0;
+    public static double calculateRating(int totalAttempt, double currentRating, int drillAttempt, double drillRating) {
+
+        double firstPercentage =  totalAttempt * currentRating;
+        double secondPercentage = drillAttempt * drillRating;
+        int sizeOfSampleSets = totalAttempt + drillAttempt;
+        double average = ((firstPercentage + secondPercentage) / sizeOfSampleSets);
+        return average;
     }
 
     /**
@@ -86,7 +107,7 @@ public class ProgramUtility {
     /**
      * @// TODO: 20/12/2022
      * */
-    public static ArrayList<Rating> ratings() {
+    public static Hashtable<Arithmetic, Hashtable<Difficulty, Rating>> ratings() {
         return null;
     }
 

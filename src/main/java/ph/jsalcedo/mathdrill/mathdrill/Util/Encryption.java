@@ -10,7 +10,7 @@ public class Encryption {
      * @return returns a Hashed String to be recorded in the DB
      *
      */
-    @NotNull
+
     public  static String generateHashPassword(String plainTextPassWord) {
         return BCrypt.hashpw(plainTextPassWord, BCrypt.gensalt());
     }

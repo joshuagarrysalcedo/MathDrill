@@ -3,12 +3,13 @@ module ph.jsalcedo.mathdrill.mathdrill {
     requires javafx.fxml;
 
     requires org.controlsfx.controls;
-    requires annotations;
     requires lombok;
     requires jbcrypt;
-
-    opens ph.jsalcedo.mathdrill.mathdrill to javafx.fxml;
-    exports ph.jsalcedo.mathdrill.mathdrill;
+    requires junit;
+    requires hamcrest.core;
+    requires org.testng;
+    requires annotations;
     exports ph.jsalcedo.mathdrill.mathdrill.db;
+    exports ph.jsalcedo.mathdrill.mathdrill.Test to junit;
     opens ph.jsalcedo.mathdrill.mathdrill.db to javafx.fxml;
 }

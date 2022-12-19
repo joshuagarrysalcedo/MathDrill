@@ -8,25 +8,27 @@ public class Rating {
     private final String ratingID;
     private final Difficulty difficulty;
     private final Arithmetic arithmetic;
+
+    private int totalAttempt;
     private double rating;
 
 
-
-    /**
-     *
-     * @param ratingID rating id when rating is already created.
-     * @param difficulty difficulty of the problem
-     * @param arithmetic what type of math problem to solve
-     * @param rating the actual rating number! Max is 100!
-     * @purpose This constructor will be used when creating a Rating Class that is retrieved from the database!
-     */
-    @CreatedFrom(source = "DATABASE")
-    public Rating(String ratingID, Difficulty difficulty, Arithmetic arithmetic, double rating) {
-        this.ratingID = ratingID;
-        this.difficulty = difficulty;
-        this.arithmetic = arithmetic;
-        this.rating = rating;
-    }
+//
+//    /**
+//     *
+//     * @param ratingID rating id when rating is already created.
+//     * @param difficulty difficulty of the problem
+//     * @param arithmetic what type of math problem to solve
+//     * @param rating the actual rating number! Max is 100!
+//     * @purpose This constructor will be used when creating a Rating Class that is retrieved from the database!
+//     */
+//    @CreatedFrom(source = "DATABASE")
+//    public Rating(String ratingID, Difficulty difficulty, Arithmetic arithmetic, double rating) {
+//        this.ratingID = ratingID;
+//        this.difficulty = difficulty;
+//        this.arithmetic = arithmetic;
+//        this.rating = rating;
+//    }
 
 
     /**
@@ -39,7 +41,8 @@ public class Rating {
         this.difficulty = difficulty;
         this.arithmetic = arithmetic;
         this.ratingID = generateRatingID();
-        this.rating = 0;
+        this.rating = 0.0;
+        this.totalAttempt = 0;
     }
 
 
@@ -88,5 +91,23 @@ public class Rating {
      * */
     private static String generateRatingID(){
         return null;
+    }
+
+    /**
+     *
+     * @return total attempt
+     * @Getter
+     */
+    public int getTotalAttempt() {
+        return totalAttempt;
+    }
+
+
+    /**
+     * @param totalAttempt to change
+     * @Setter
+     */
+    public void setTotalAttempt(int totalAttempt) {
+        this.totalAttempt = totalAttempt;
     }
 }
