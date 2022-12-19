@@ -11,6 +11,7 @@ import ph.jsalcedo.mathdrill.mathdrill.model.User;
 
 import java.util.ArrayList;
 import java.util.Hashtable;
+import java.util.Random;
 
 public class ProgramUtility {
     private ProgramUtility(){}
@@ -42,7 +43,7 @@ public class ProgramUtility {
 
     /**
      * Finished Testing!
-     * @// TODO: 20/12/2022  need to convert the result to two decimal places only! 
+     * @// TODO: 20/12/2022  need to convert the result to two decimal places only!
      * */
     public static double calculateRating(int totalAttempt, double currentRating, int drillAttempt, double drillRating) {
 
@@ -54,31 +55,129 @@ public class ProgramUtility {
     }
 
     /**
-    * @// TODO: 20/12/2022
+    * @Test
     * */
     public static void alertMessage(String message, Alert.AlertType type) {
-
+        Alert alert = new Alert(type, message);
+        alert.showAndWait();
     }
 
     /**
-     * @// TODO: 20/12/2022
+     * @Tested passed
+     * @// FIXME: 20/12/2022
      * */
-    public static int generateFirstNumberToSumOrMul(Difficulty difficulty) {
-        return 0;
+    public static int generateFirstNumberOfSumOrMul(Difficulty difficulty) {
+        Random ran = new Random();
+        int num = 0;
+        int min = Integer.MIN_VALUE;
+        int max = Integer.MAX_VALUE;
+        switch (difficulty) {
+            case EASY -> {
+                min = 1;
+                max = 10;
+            }
+            case MEDIUM -> {
+                min = 10;
+                max = 90;
+            }
+            case HARD -> {
+                min = 100;
+                max = 900;
+            }
+        }
+        num = ran.nextInt(max) + min;
+        return num;
     }
 
     /**
-     * @// TODO: 20/12/2022
+     * @Tested passed
+     * @param difficulty
+     * @// FIXME: 20/12/2022
+     * @return
+     */
+    public static int generateSecondNumberOfSumOrMul(Difficulty difficulty) {
+        Random ran = new Random();
+        int num = 0;
+        int min = Integer.MIN_VALUE;
+        int max = Integer.MAX_VALUE;
+        switch (difficulty) {
+            case EASY -> {
+                min = 1;
+                max = 20;
+            }
+            case MEDIUM -> {
+                min = 1;
+                max = 100;
+            }
+            case HARD -> {
+                min = 10;
+                max = 990;
+            }
+        }
+        num = ran.nextInt(max) + min;
+        return num;
+    }
+
+    /**
+     * @Tested passed
+     * @// FIXME: 20/12/2022
      * */
     public static int generateMinuend(Difficulty difficulty) {
-        return 0;
+        Random ran = new Random();
+        int num = 0;
+        int min = Integer.MIN_VALUE;
+        int max = Integer.MAX_VALUE;
+        switch (difficulty) {
+            case EASY -> {
+                min = 10;
+                max = 11;
+            }
+            case MEDIUM -> {
+                min = 30;
+                max = 70;
+            }
+            case HARD -> {
+                min = 100;
+                max = 900;
+            }
+        }
+        num = ran.nextInt(max) + min;
+        return num;
     }
 
     /**
-     * @// TODO: 20/12/2022
+     * @Tested passed
+     * @// FIXME: 20/12/2022 
      * */
-    public static int generateSubtrahend(Difficulty difficulty) {
-        return 0;
+    public static int generateSubtrahend(Difficulty difficulty, int minuend) {
+        Random ran = new Random();
+        int num = 0;
+        int min = Integer.MIN_VALUE;
+        int max = Integer.MAX_VALUE;
+        switch (difficulty) {
+            case EASY -> {
+                min = 1;
+                max = minuend - 1;
+            }
+            case MEDIUM -> {
+                min = 20;
+                max = minuend - min;
+                System.out.println("Max = " + minuend);
+                System.out.printf("ran.nextInt(%d) + %d;\n",max, min);
+            }
+            case HARD -> {
+                min = 90;
+                max = 910;
+            }
+        }
+        try {
+            num = ran.nextInt(max) + min;
+        }catch (IllegalArgumentException e) {
+            generateSubtrahend(difficulty, minuend +1);
+            System.out.println("Bound is 0 do it again!");
+        }
+
+        return num;
     }
 
     /**
