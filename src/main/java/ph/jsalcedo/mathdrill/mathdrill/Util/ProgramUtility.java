@@ -274,4 +274,8 @@ public class ProgramUtility {
         return count >= 3;
     }
 
+    public static String generateID(int year, long format, int count){
+        return String.format("%d-%d-%04d", year, format, count+1 );
+    }
+
 }

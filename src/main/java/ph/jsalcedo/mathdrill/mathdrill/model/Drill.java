@@ -3,6 +3,7 @@ package ph.jsalcedo.mathdrill.mathdrill.model;
 import lombok.experimental.FieldDefaults;
 import ph.jsalcedo.mathdrill.mathdrill.Util.ProgramUtility;
 import ph.jsalcedo.mathdrill.mathdrill.annotation.CreatedFrom;
+import ph.jsalcedo.mathdrill.mathdrill.db.DataBase;
 import ph.jsalcedo.mathdrill.mathdrill.enums.DrillType;
 
 import java.time.LocalDate;
@@ -22,6 +23,8 @@ public class Drill {
      *  timer,
      *  task,
      */
+    private final int CURRENT_YEAR = LocalDate.now().getYear();
+    private final long ID_FORMAT = 20000;
     private final String drill_ID;
     private final User user;
     private final DrillType type;
@@ -64,7 +67,7 @@ public class Drill {
     public Drill(User user, DrillType type) {
         this.user = user;
         this.type = type;
-        this.drill_ID = generateDrillID();
+        this.drill_ID = ProgramUtility.generateID(CURRENT_YEAR, ID_FORMAT, DataBase.count("drills"));
         this.date = LocalDate.now();
     }
 
@@ -92,15 +95,12 @@ public class Drill {
      * @param totalAttempt total attempts
      * @param totalScore   total score
      * @return the percentage 
-     * @// TODO: 20/12/2022  
+     * @// TODO: 20/12/2022
+     * @Test
      */
     private double calculateRating(int totalAttempt, int totalScore){
-        return 0.0;
+        double percent = (double)totalScore / totalAttempt;
+        return percent * 100;
     }
-    /**
-     * @// TODO: 20/12/2022
-     * */
-    private static String generateDrillID(){
-        return null;
-    }
+
 }

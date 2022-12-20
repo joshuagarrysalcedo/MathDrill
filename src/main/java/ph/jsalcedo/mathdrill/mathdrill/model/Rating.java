@@ -1,10 +1,17 @@
 package ph.jsalcedo.mathdrill.mathdrill.model;
 
+import ph.jsalcedo.mathdrill.mathdrill.Util.ProgramUtility;
 import ph.jsalcedo.mathdrill.mathdrill.annotation.CreatedFrom;
+import ph.jsalcedo.mathdrill.mathdrill.db.DataBase;
 import ph.jsalcedo.mathdrill.mathdrill.enums.Arithmetic;
 import ph.jsalcedo.mathdrill.mathdrill.enums.Difficulty;
 
+import java.time.LocalDate;
+
 public class Rating {
+
+    private final int CURRENT_YEAR = LocalDate.now().getYear();
+    private final long ID_FORMAT = 30000;
     private final String ratingID;
     private final Difficulty difficulty;
     private final Arithmetic arithmetic;
@@ -40,9 +47,10 @@ public class Rating {
     public Rating(Difficulty difficulty, Arithmetic arithmetic) {
         this.difficulty = difficulty;
         this.arithmetic = arithmetic;
-        this.ratingID = generateRatingID();
+        this.ratingID = ProgramUtility.generateID(CURRENT_YEAR, ID_FORMAT, DataBase.count("ratings"));
         this.rating = 0.0;
         this.totalAttempt = 0;
+
     }
 
 
@@ -86,12 +94,6 @@ public class Rating {
         this.rating = rating;
     }
 
-    /**
-     * @// TODO: 20/12/2022
-     * */
-    private static String generateRatingID(){
-        return null;
-    }
 
     /**
      *

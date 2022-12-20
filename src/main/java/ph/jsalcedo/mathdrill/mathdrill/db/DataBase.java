@@ -77,7 +77,7 @@ public class DataBase {
 
     /**
      * @param ratingID rating ID of the user.
-     * @see ProgramUtility#ratings()
+     * @see ProgramUtility#calculateRating(int, double, int, double) ()
      * @see User#getRatings()
      * @return if true It means the rating has been updated to the Database
      * @// TODO: 20/12/2022
@@ -118,6 +118,10 @@ public class DataBase {
     @Retrieve
     public static String retrieveStringData(String tableName, String criteria, String fieldToRetrieve, String condition) {
         return null;
+    }
+    
+    public static int count(String tableName) {
+        return 0;
     }
 
 

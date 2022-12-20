@@ -5,21 +5,23 @@ import lombok.Getter;
 import ph.jsalcedo.mathdrill.mathdrill.Util.Encryption;
 import ph.jsalcedo.mathdrill.mathdrill.Util.ProgramUtility;
 import ph.jsalcedo.mathdrill.mathdrill.annotation.CreatedFrom;
+import ph.jsalcedo.mathdrill.mathdrill.db.DataBase;
 import ph.jsalcedo.mathdrill.mathdrill.enums.Arithmetic;
 import ph.jsalcedo.mathdrill.mathdrill.enums.Difficulty;
 
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Hashtable;
 
 public class User {
-
+    private final int CURRENT_YEAR = LocalDate.now().getYear();
+    private final long ID_FORMAT = 10000;
     private final String userID;
     private final String userName;
     private final String hashPassWord;
     private final Hashtable<Arithmetic, Hashtable<Difficulty, Rating>> ratings;
-
-
+    private final LocalDate accountCreated;
 
 
 //    /**
@@ -47,7 +49,8 @@ public class User {
         this.userName = userName;
         this.hashPassWord = Encryption.generateHashPassword(password);
         this.ratings = ProgramUtility.generateNewRatings();
-        this.userID = generateUserID();
+        this.userID = ProgramUtility.generateID(CURRENT_YEAR, ID_FORMAT, DataBase.count("users"));
+        this.accountCreated = LocalDate.now();
     }
 
     /**
@@ -79,10 +82,7 @@ public class User {
         return ratings;
     }
 
-    /**
-     * @// TODO: 20/12/2022
-     * */
-    public static String generateUserID(){
-        return null;
+    public LocalDate getAccountCreated() {
+        return accountCreated;
     }
 }

@@ -6,6 +6,7 @@ import ph.jsalcedo.mathdrill.mathdrill.enums.Difficulty;
 import ph.jsalcedo.mathdrill.mathdrill.model.Rating;
 
 import java.lang.reflect.Array;
+import java.time.LocalDate;
 import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -37,23 +38,37 @@ public class Main {
 //            System.out.print(e + " ");
 //        });
 //        System.out.println();
-
-        Hashtable<Arithmetic, Hashtable<Difficulty, Rating>> ratingList = ProgramUtility.generateNewRatings();
-        Enumeration<Arithmetic> e = ratingList.keys();
-        while(e.hasMoreElements()) {
-            Arithmetic arithmeticKey = e.nextElement();
-            Hashtable<Difficulty, Rating> innerHashTable = ratingList.get(arithmeticKey);
-            Enumeration<Difficulty> d = innerHashTable.keys();
-            while(d.hasMoreElements()) {
-                Difficulty difficultyKey = d.nextElement();
-                System.out.printf("%s\t%s\t%f\n", arithmeticKey.toString(), difficultyKey.toString(), innerHashTable.get(difficultyKey).getRating());
-            }
-        }
+//
+//        Hashtable<Arithmetic, Hashtable<Difficulty, Rating>> ratingList = ProgramUtility.generateNewRatings();
+//        Enumeration<Arithmetic> e = ratingList.keys();
+//        while(e.hasMoreElements()) {
+//            Arithmetic arithmeticKey = e.nextElement();
+//            Hashtable<Difficulty, Rating> innerHashTable = ratingList.get(arithmeticKey);
+//            Enumeration<Difficulty> d = innerHashTable.keys();
+//            while(d.hasMoreElements()) {
+//                Difficulty difficultyKey = d.nextElement();
+//                System.out.printf("%s\t%s\t%f\n", arithmeticKey.toString(), difficultyKey.toString(), innerHashTable.get(difficultyKey).getRating());
+//            }
+//        }
 
 //        Difficulty[] difficulties = Difficulty.values().clone();
 //        for(int j = 0; j < difficulties.length; j++) {
 //            System.out.println(difficulties[j].toString());
 //        }
 
+        UUID uniqueKey = UUID.randomUUID();
+        System.out.println(generateUniqueId(1));
+        System.out.println(LocalDate.now());
+
+    }
+
+    public static String generateUniqueId(int count) {
+        UUID idOne = UUID.randomUUID();
+        String str=""+idOne;
+        long     uid=str.hashCode();
+        String filterStr=""+uid;
+        str=filterStr.replaceAll("-", "");
+       return str = String.format("%s-%04d", str, count);
+       // return Long.parseLong(str);
     }
 }
