@@ -142,4 +142,65 @@ public class ProgramUtilityTest {
             assertTrue(num <= 999 && num >= 90);
         }
     }
+
+    @Test
+    public void generateDividendTest(){
+        for(int i = 0; i < 1000; i++) {
+            int num = ProgramUtility.generateDividend(Difficulty.EASY);
+            System.out.print(num + " ");
+            assertTrue(num <= 20 && num >= 1);
+        }
+    }
+    @Test
+    public void generateDividendTest2(){
+        for(int i = 0; i < 1000; i++) {
+            int num = ProgramUtility.generateDividend(Difficulty.MEDIUM);
+            System.out.print(num + " ");
+            assertTrue(num <= 150 && num >= 20);
+        }
+    }
+    @Test
+    public void generateDividendTest3(){
+        for(int i = 0; i < 1000; i++) {
+            int num = ProgramUtility.generateDividend(Difficulty.HARD);
+            System.out.print(num + " ");
+            assertTrue(num <= 1000 && num >= 100);
+        }
+    }
+
+    @Test public void generateDivisorTest(){
+        for(int i = 0; i < 1000; i++) {
+
+            int dividend = ProgramUtility.generateDividend(Difficulty.EASY);
+            int divisor = ProgramUtility.generateDivisor(dividend);
+            int div = MathUtility.div(dividend, divisor);
+
+            System.out.printf("%d / %d = %d\n", dividend, divisor, div);
+            assertEquals(dividend, div * divisor);
+        }
+    }
+
+    @Test public void generateDivisorTest2(){
+        for(int i = 0; i < 1000; i++) {
+
+            int dividend = ProgramUtility.generateDividend(Difficulty.MEDIUM);
+            int divisor = ProgramUtility.generateDivisor(dividend);
+            int div = MathUtility.div(dividend, divisor);
+
+            System.out.printf("%d / %d = %d\n", dividend, divisor, div);
+            assertEquals(dividend, div * divisor);
+        }
+    }
+
+    @Test public void generateDivisorTest3(){
+        for(int i = 0; i < 1000; i++) {
+
+            int dividend = ProgramUtility.generateDividend(Difficulty.HARD);
+            int divisor = ProgramUtility.generateDivisor(dividend);
+            int div = MathUtility.div(dividend, divisor);
+
+            System.out.printf("%d / %d = %d\n", dividend, divisor, div);
+            assertEquals(dividend, div * divisor);
+        }
+    }
 }

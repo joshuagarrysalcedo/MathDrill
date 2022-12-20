@@ -9,9 +9,9 @@ import ph.jsalcedo.mathdrill.mathdrill.model.Rating;
 import ph.jsalcedo.mathdrill.mathdrill.model.RatingRecord;
 import ph.jsalcedo.mathdrill.mathdrill.model.User;
 
-import java.util.ArrayList;
-import java.util.Hashtable;
-import java.util.Random;
+import java.util.*;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 public class ProgramUtility {
     private ProgramUtility(){}
@@ -20,6 +20,7 @@ public class ProgramUtility {
     /**
     *
      * @Test
+     * @return returns false if login invalid
     * */
     public static boolean  login(String username, String pass) {
             String tableName = "users";
@@ -35,6 +36,7 @@ public class ProgramUtility {
 
     /**
     * @Test
+     * @purpose this will register the user to the database
     * */
     public static void register(String userName, String pass) {
             User user = new User(userName,pass);
@@ -44,6 +46,7 @@ public class ProgramUtility {
     /**
      * Finished Testing!
      * @// TODO: 20/12/2022  need to convert the result to two decimal places only!
+     * @return this will return the average rating of the User
      * */
     public static double calculateRating(int totalAttempt, double currentRating, int drillAttempt, double drillRating) {
 
@@ -56,6 +59,7 @@ public class ProgramUtility {
 
     /**
     * @Test
+     * this will be a popup window;
     * */
     public static void alertMessage(String message, Alert.AlertType type) {
         Alert alert = new Alert(type, message);
@@ -65,6 +69,7 @@ public class ProgramUtility {
     /**
      * @Tested passed
      * @// FIXME: 20/12/2022
+     * @return it should return the first number that is going to be used by sum or addition
      * */
     public static int generateFirstNumberOfSumOrMul(Difficulty difficulty) {
         Random ran = new Random();
@@ -93,7 +98,7 @@ public class ProgramUtility {
      * @Tested passed
      * @param difficulty
      * @// FIXME: 20/12/2022
-     * @return
+     * @return it should return the second number that is going to be used by sum or addition
      */
     public static int generateSecondNumberOfSumOrMul(Difficulty difficulty) {
         Random ran = new Random();
@@ -121,6 +126,7 @@ public class ProgramUtility {
     /**
      * @Tested passed
      * @// FIXME: 20/12/2022
+     * @return returns the minuend! will be used by subtraction
      * */
     public static int generateMinuend(Difficulty difficulty) {
         Random ran = new Random();
@@ -147,7 +153,8 @@ public class ProgramUtility {
 
     /**
      * @Tested passed
-     * @// FIXME: 20/12/2022 
+     * @// FIXME: 20/12/2022
+     * @return returns a subtrahend. This will be used by subtraction
      * */
     public static int generateSubtrahend(Difficulty difficulty, int minuend) {
         Random ran = new Random();
@@ -181,34 +188,90 @@ public class ProgramUtility {
     }
 
     /**
-     * @// TODO: 20/12/2022
+     * @Tested passed
+     * @// FIXME: 20/12/2022
+     * @return returns a dividend. This will be used by division!
      * */
     public static int generateDividend(Difficulty difficulty) {
-        return 0;
+        Random ran = new Random();
+        int num = 0;
+        int min = Integer.MIN_VALUE;
+        int max = Integer.MAX_VALUE;
+        switch (difficulty) {
+            case EASY -> {
+                min = 2; //1-20
+                max = 19;
+            }
+            case MEDIUM -> {
+                min = 20;//20-150
+                max = 131;
+            }
+            case HARD -> {
+                min = 100;//100-1000
+                max = 901;
+            }
+        }
+        do{
+            num = ran.nextInt(max) + min;
+        }while (!isPrime(num));
+
+
+        return num;
     }
 
     /**
-     * @// TODO: 20/12/2022
+     * @Tested passed
+     * @// FIXME: 20/12/2022
+     * @param dividend this parameter is need to make sure that the number that was given has a factor!
+     * @return returns a divisor. This will return any divisory except the number itself and 1.
      * */
-    public static int generateDivisor(Difficulty difficulty) {
-        return 0;
+    public static int generateDivisor(int dividend) {
+        List<Integer> factors = IntStream.range(1, dividend).boxed().collect(Collectors.toList());
+        factors.removeIf(x -> !(dividend % x == 0) || (x <= 1) || (x == dividend));
+        Collections.shuffle(factors);
+        factors.forEach(e -> {
+            System.out.print(e + " ");
+        });
+        System.out.println();
+        return factors.get(0);
     }
 
 
 
-
     /**
-    * @// TODO: 20/12/2022
-    * */
-    public static double calculateNewRating(double newRating) {
-        return 0.0;
-    }
-    /**
-     * @// TODO: 20/12/2022
+     * @Tested passed!
+     * @// FIXME: 20/12/2022
+     * Returns a HashTable of Different Kinds of Ratings
      * */
-    public static Hashtable<Arithmetic, Hashtable<Difficulty, Rating>> ratings() {
-        return null;
+    public static Hashtable<Arithmetic, Hashtable<Difficulty, Rating>> generateNewRatings() {
+        Hashtable<Arithmetic, Hashtable<Difficulty, Rating>> ratingList = new Hashtable<>();
+        Arithmetic[] arithmetics = Arithmetic.values().clone();
+        Difficulty[] difficulties = Difficulty.values().clone();
+        for(int i = 0; i < arithmetics.length; i++) {
+            Hashtable<Difficulty, Rating> innerHashTable = new Hashtable<>();
+            for(int j = 0; j < difficulties.length; j++) {
+                Rating rating = new Rating(difficulties[j], arithmetics[i]);
+                innerHashTable.put(difficulties[j], rating);
+            }
+            ratingList.put(arithmetics[i], innerHashTable);
+        }
+       return ratingList;
     }
 
+
+    /**
+     * @Tested passed
+     * @param num the number to checked it is prime or not!
+     * @return returns a boolean. If it is true then it is Prime!
+     */
+    public static boolean isPrime(int num){
+        int count = 0;
+        for(int i = 1; i <= num; i++) {
+            if(num % i == 0) {
+                count++;
+            }
+        }
+        return count >= 3;
+    }
 
 }

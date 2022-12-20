@@ -46,7 +46,7 @@ public class User {
     public User(String userName, String password) {
         this.userName = userName;
         this.hashPassWord = Encryption.generateHashPassword(password);
-        this.ratings = ProgramUtility.ratings();
+        this.ratings = ProgramUtility.generateNewRatings();
         this.userID = generateUserID();
     }
 
