@@ -1,6 +1,7 @@
 
 package ph.jsalcedo.mathdrill.mathdrill.model;
 
+import javafx.scene.control.Alert;
 import lombok.Getter;
 import ph.jsalcedo.mathdrill.mathdrill.Util.Encryption;
 import ph.jsalcedo.mathdrill.mathdrill.Util.ProgramUtility;
@@ -20,24 +21,22 @@ public class User {
     private final String userID;
     private final String userName;
     private final String hashPassWord;
-    private final Hashtable<Arithmetic, Hashtable<Difficulty, Rating>> ratings;
-    private final LocalDate accountCreated;
+    private  Hashtable<Arithmetic, Hashtable<Difficulty, Rating>> ratings;
 
 
-//    /**
-//     * @param userID userID retrieved from the DB
-//     * @param userName userName retrieved from the DB
-//     * @param hashPassWord hashPassWord retrieved from the DB
-//     * @param ratings List of ratings retrieved from the DB
-//     * @purpose This constructor will be whenever we access the user from the DB
-//     */
-//    @CreatedFrom(source = "DATABASE")
-//    public User(String userID, String userName, String hashPassWord, Hashtable<Arithmetic, Hashtable<Difficulty, Rating>> ratings) {
-//        this.userID = userID;
-//        this.userName = userName;
-//        this.hashPassWord = hashPassWord;
-//        this.ratings = ratings;
-//    }
+
+    /**
+     * @param userID userID retrieved from the DB
+     * @param userName userName retrieved from the DB
+     * @param hashPassWord hashPassWord retrieved from the DB
+     * @purpose This constructor will be whenever we access the user from the DB
+     */
+    @CreatedFrom(source = "DATABASE")
+    public User(String userID, String userName, String hashPassWord) {
+        this.userID = userID;
+        this.userName = userName;
+        this.hashPassWord = hashPassWord;
+    }
 
     /**
      * @param userName username of the USER
@@ -48,9 +47,8 @@ public class User {
     public User(String userName, String password) {
         this.userName = userName;
         this.hashPassWord = Encryption.generateHashPassword(password);
-        this.ratings = ProgramUtility.generateNewRatings();
         this.userID = ProgramUtility.generateID(CURRENT_YEAR, ID_FORMAT, DataBase.count("users"));
-        this.accountCreated = LocalDate.now();
+
     }
 
     /**
@@ -82,7 +80,8 @@ public class User {
         return ratings;
     }
 
-    public LocalDate getAccountCreated() {
-        return accountCreated;
+
+    public void setRatings(Hashtable<Arithmetic, Hashtable<Difficulty, Rating>> ratings) {
+        this.ratings = ratings;
     }
 }

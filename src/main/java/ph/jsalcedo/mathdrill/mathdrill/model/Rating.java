@@ -8,7 +8,7 @@ import ph.jsalcedo.mathdrill.mathdrill.enums.Difficulty;
 
 import java.time.LocalDate;
 
-public class Rating {
+public class Rating implements Recordable{
 
     private final int CURRENT_YEAR = LocalDate.now().getYear();
     private final long ID_FORMAT = 30000;
@@ -16,26 +16,30 @@ public class Rating {
     private final Difficulty difficulty;
     private final Arithmetic arithmetic;
 
+    private final String userID;
+
     private int totalAttempt;
     private double rating;
 
 
-//
-//    /**
-//     *
-//     * @param ratingID rating id when rating is already created.
-//     * @param difficulty difficulty of the problem
-//     * @param arithmetic what type of math problem to solve
-//     * @param rating the actual rating number! Max is 100!
-//     * @purpose This constructor will be used when creating a Rating Class that is retrieved from the database!
-//     */
-//    @CreatedFrom(source = "DATABASE")
-//    public Rating(String ratingID, Difficulty difficulty, Arithmetic arithmetic, double rating) {
-//        this.ratingID = ratingID;
-//        this.difficulty = difficulty;
-//        this.arithmetic = arithmetic;
-//        this.rating = rating;
-//    }
+
+    /**
+     *
+     * @param ratingID rating id when rating is already created.
+     * @param difficulty difficulty of the problem
+     * @param arithmetic what type of math problem to solve
+     * @param rating the actual rating number! Max is 100!
+     * @purpose This constructor will be used when creating a Rating Class that is retrieved from the database!
+     */
+    @CreatedFrom(source = "DATABASE")
+    public Rating(String ratingID, String userID, Difficulty difficulty, Arithmetic arithmetic, double rating, int totalAttempt) {
+        this.ratingID = ratingID;
+        this.userID = userID;
+        this.difficulty = difficulty;
+        this.arithmetic = arithmetic;
+        this.rating = rating;
+        this.totalAttempt = totalAttempt;
+    }
 
 
     /**
@@ -44,10 +48,11 @@ public class Rating {
      * @purpose This constructor will be used when creating a rating for the first time!
      */
     @CreatedFrom(source = "NEW")
-    public Rating(Difficulty difficulty, Arithmetic arithmetic) {
+    public Rating(Difficulty difficulty, Arithmetic arithmetic, String userID) {
         this.difficulty = difficulty;
         this.arithmetic = arithmetic;
-        this.ratingID = ProgramUtility.generateID(CURRENT_YEAR, ID_FORMAT, DataBase.count("ratings"));
+        this.userID = userID;
+        this.ratingID = ProgramUtility.generateID(CURRENT_YEAR, ID_FORMAT, DataBase.count("ratings") + 1);
         this.rating = 0.0;
         this.totalAttempt = 0;
 
@@ -111,5 +116,9 @@ public class Rating {
      */
     public void setTotalAttempt(int totalAttempt) {
         this.totalAttempt = totalAttempt;
+    }
+
+    public String getUserID() {
+        return userID;
     }
 }

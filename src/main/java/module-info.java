@@ -9,7 +9,10 @@ module ph.jsalcedo.mathdrill.mathdrill {
     requires hamcrest.core;
     requires org.testng;
     requires annotations;
-    exports ph.jsalcedo.mathdrill.mathdrill.db;
+    requires java.sql;
+    exports ph.jsalcedo.mathdrill.mathdrill;
     exports ph.jsalcedo.mathdrill.mathdrill.Test to junit;
+
     opens ph.jsalcedo.mathdrill.mathdrill.db to javafx.fxml;
+    opens ph.jsalcedo.mathdrill.mathdrill.controllers to javafx.fxml;
 }

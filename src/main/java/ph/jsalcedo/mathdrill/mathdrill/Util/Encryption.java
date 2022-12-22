@@ -2,6 +2,7 @@ package ph.jsalcedo.mathdrill.mathdrill.Util;
 
 import org.jetbrains.annotations.NotNull;
 import org.mindrot.jbcrypt.BCrypt;
+import ph.jsalcedo.mathdrill.mathdrill.db.DataBase;
 
 public class Encryption {
 
@@ -17,10 +18,11 @@ public class Encryption {
 
     /**
      * @param inputPassword the password that the user is trying to input
-     * @param hashedPassword the hashpassword that is retrieved from the Database
      * @return if false, then authentication failed, if true then correct!
      */
-    public static boolean checkPass(String inputPassword, String hashedPassword) {
+    public static boolean checkPass(String inputPassword, String userName) {
+        String hashedPassword = DataBase.retrieveStringData("hash","users", "username", userName);
+
         if(BCrypt.checkpw(inputPassword, hashedPassword)) {
             System.out.println("Password correct!");
             return true;

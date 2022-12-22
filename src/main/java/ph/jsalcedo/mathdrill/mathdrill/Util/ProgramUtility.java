@@ -40,7 +40,7 @@ public class ProgramUtility {
     * */
     public static void register(String userName, String pass) {
             User user = new User(userName,pass);
-            DataBase.addUser(user.getUserID(), user.getUserName(), user.getHashPassWord());
+            DataBase.addUser(user);
     }
 
     /**
@@ -243,14 +243,15 @@ public class ProgramUtility {
      * @// FIXME: 20/12/2022
      * Returns a HashTable of Different Kinds of Ratings
      * */
-    public static Hashtable<Arithmetic, Hashtable<Difficulty, Rating>> generateNewRatings() {
+    public static Hashtable<Arithmetic, Hashtable<Difficulty, Rating>> generateNewRatings(String userID) {
         Hashtable<Arithmetic, Hashtable<Difficulty, Rating>> ratingList = new Hashtable<>();
         Arithmetic[] arithmetics = Arithmetic.values().clone();
         Difficulty[] difficulties = Difficulty.values().clone();
         for(int i = 0; i < arithmetics.length; i++) {
             Hashtable<Difficulty, Rating> innerHashTable = new Hashtable<>();
             for(int j = 0; j < difficulties.length; j++) {
-                Rating rating = new Rating(difficulties[j], arithmetics[i]);
+                Rating rating = new Rating(difficulties[j], arithmetics[i], userID);
+                DataBase.addRating(rating);
                 innerHashTable.put(difficulties[j], rating);
             }
             ratingList.put(arithmetics[i], innerHashTable);
@@ -276,6 +277,47 @@ public class ProgramUtility {
 
     public static String generateID(int year, long format, int count){
         return String.format("%d-%d-%04d", year, format, count+1 );
+    }
+
+    public static HashMap<String, Integer> getValues(Arithmetic arithmetic, Difficulty difficulty) {
+        HashMap<String, Integer> map = new HashMap<>();
+        map.put("num1", null);
+        map.put("num2", null);
+        map.put("answer", null);
+        map.put("symbol", null);
+        switch (arithmetic) {
+            case ADDITION, MULTIPLICATION -> {
+                map.put("num1", ProgramUtility.generateFirstNumberOfSumOrMul(difficulty));
+                map.put("num2", ProgramUtility.generateFirstNumberOfSumOrMul(difficulty));
+                if(arithmetic == Arithmetic.ADDITION) {
+                    map.put("answer", MathUtility.sum(map.get("num1"), map.get("num2")));
+                    map.put("symbol", 0);
+                }
+
+
+                else {
+                    map.put("answer", MathUtility.mul(map.get("num1"), map.get("num2")));
+                    map.put("symbol", 2);
+                }
+
+
+            }
+            case SUBTRACTION -> {
+                map.put("num1", ProgramUtility.generateMinuend(difficulty));
+                map.put("num2", ProgramUtility.generateSubtrahend(difficulty, map.get("num1")));
+                map.put("answer", MathUtility.sub(map.get("num1"), map.get("num2")));
+                map.put("symbol", 1);
+
+            }
+            case DIVISION -> {
+                map.put("num1", ProgramUtility.generateDividend(difficulty));
+                map.put("num2", ProgramUtility.generateDivisor(map.get("num1")));
+                map.put("answer", MathUtility.div(map.get("num1"), map.get("num2")));
+                map.put("symbol", 3);
+
+            }
+        }
+        return map;
     }
 
 }

@@ -1,15 +1,11 @@
 package ph.jsalcedo.mathdrill.mathdrill;
 
-import ph.jsalcedo.mathdrill.mathdrill.Util.ProgramUtility;
 import ph.jsalcedo.mathdrill.mathdrill.enums.Arithmetic;
-import ph.jsalcedo.mathdrill.mathdrill.enums.Difficulty;
-import ph.jsalcedo.mathdrill.mathdrill.model.Rating;
+import ph.jsalcedo.mathdrill.mathdrill.enums.DrillType;
+import ph.jsalcedo.mathdrill.mathdrill.game.TimeThread;
+import ph.jsalcedo.mathdrill.mathdrill.model.Drill;
 
-import java.lang.reflect.Array;
-import java.time.LocalDate;
 import java.util.*;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 
 public class Main {
     public static void main(String[] args) {
@@ -56,9 +52,38 @@ public class Main {
 //            System.out.println(difficulties[j].toString());
 //        }
 
-        UUID uniqueKey = UUID.randomUUID();
-        System.out.println(generateUniqueId(1));
-        System.out.println(LocalDate.now());
+
+//        User user = new User("swaswa", "1234");
+//        DataBase.addUser(user);
+//        Difficulty df = Difficulty.valueOf("EASY");
+//        System.out.println(df);
+//          User user = new User("sample", "2468");
+//        Drill drill = new Drill("213123852","2022-10000-0001",  "2022-30000-0002", DrillType.RANK, 30, 20);
+//        System.out.println(drill);
+//        System.out.println(DataBase.addDrill(drill));
+//        long millis = System.currentTimeMillis();
+//        Date date = new Date(millis);
+//        System.out.println(date.toString());
+//        ArrayList<Drill> drills = new ArrayList<>();
+//        drills = DataBase.drillList("2022-10000-0001");
+//
+//        System.out.println(DataBase.count("drills"));
+//        //System.out.println(DataBase.doesItExists("2022-30000-0002", "drills"));
+//
+//        System.out.println(drills.size());
+//
+//        drills.forEach(System.out::println);
+//
+//        System.out.println(DataBase.updateRating("2022-30000-0002", 40, .9));
+        Drill drill = new Drill("2022-10000-000","2022-30000-0002", DrillType.RANK);
+        TimeThread time = new TimeThread(drill);
+        Thread timerThread = new Thread(time);
+        Thread drillThread = new Thread(time.getDrill());
+        timerThread.start();
+        System.out.println("Score : " + drill.getTotalScore());
+        System.out.println("Total Attempt : " + drill.getTotalAttempt());
+
+
 
     }
 
@@ -71,4 +96,6 @@ public class Main {
        return str = String.format("%s-%04d", str, count);
        // return Long.parseLong(str);
     }
+
+
 }
